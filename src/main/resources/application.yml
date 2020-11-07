@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:9000/system
+    username: root
+    password: root
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database: MYSQL
+    properties:
+      hibernate.generate_statistics: false
+      hibernate.format_sql: true
