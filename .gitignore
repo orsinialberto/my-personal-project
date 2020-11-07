@@ -33,6 +33,5 @@ build/
 .vscode/
 
 ### Docker ###
-docker-compose.yml
-/db-script
-/docker
+/db-script/
+/docker/

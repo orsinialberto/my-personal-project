@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "id": {
+      "type": "keyword"
+    },
+    "walletId": {
+      "type": "keyword"
+    },
+    "amount": {
+      "type": "double"
+    },
+    "description": {
+      "type": "keyword"
+    },
+    "tag": {
+      "type": "keyword"
+    },
+    "type": {
+      "type": "keyword"
+    },
+    "currency": {
+      "type": "keyword"
+    },
+    "accountingDate": {
+      "type": "date"
+    },
+    "valueDate": {
+      "type": "date"
+    },
+    "registeredAt": {
+      "type": "date"
+    },
+    "updatedAt": {
+      "type": "date"
+    }
+  }
+}
