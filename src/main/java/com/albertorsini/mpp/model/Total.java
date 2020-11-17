@@ -56,11 +56,11 @@ public class Total {
   public void updateTotals(Double amount, EventType eventType) {
 
     if (eventType.equals(EventType.EXPENSE)) {
-      this.deficit = this.deficit + amount;
-      this.totalExpense = this.totalExpense + amount;
+      this.totalExpense += amount;
     } else {
-      this.deficit = this.deficit - amount;
-      this.totalIncome = this.totalIncome + amount;
+      this.totalIncome += amount;
     }
+
+    this.deficit += amount;
   }
 }
