@@ -11,11 +11,16 @@ import com.albertorsini.mpp.repository.EventRepository;
 import com.albertorsini.mpp.web.assembler.EventResourceAssembler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static com.albertorsini.mpp.model.Action.DELETE;
 import static com.albertorsini.mpp.model.Action.INDEX;
@@ -24,6 +29,8 @@ import static java.util.UUID.randomUUID;
 
 @Service
 public class EventService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(EventService.class);
 
   //todo mettere a configurazione
   private static final String TOPIC_NAME = "events";
@@ -66,14 +73,25 @@ public class EventService {
     return entity;
   }
 
-  public void saveAndIndex(final Event entity) {
+  public void saveAndIndex(final List<Event> entities) {
 
-    requireNonNull(entity, "event must not be null");
+    requireNonNull(entities, "event must not be null");
 
-    final Event event = eventRepository.save(entity);
+    LOGGER.info("saving {} events", entities.size());
 
-    final String body = convertEvent(event, INDEX);
+    final Iterable<Event> events = eventRepository.saveAll(entities);
+
+    LOGGER.info("saved {} events", entities.size());
+
+    final String body = StreamSupport.stream(events.spliterator(), true)
+      .map(event -> convertEvent(event, INDEX))
+      .collect(Collectors.joining());
+
+    LOGGER.info("indexing {} events", entities.size());
+
     elasticsearchClient.index(body);
+
+    LOGGER.info("indexed {} events", entities.size());
   }
 
   public Event findOne(final String walletId, final String eventId) {

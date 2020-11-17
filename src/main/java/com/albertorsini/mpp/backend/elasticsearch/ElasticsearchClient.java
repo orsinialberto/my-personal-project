@@ -32,7 +32,7 @@ public class ElasticsearchClient {
     requireNonNull(endpoint, "endpoint must be not null");
     requireNonNull(body, "body must be not null");
 
-    LOGGER.info("PUT elastic request \n{}", body);
+    LOGGER.debug("PUT elastic request \n{}", body);
 
     performRequest(PUT, endpoint, params, body);
   }

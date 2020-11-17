@@ -14,31 +14,24 @@ spring:
   kafka:
     producer:
       bootstrap-servers: localhost:9092
+      acks: "all"
+      retries: 0
+      batch-size: 100
+      linger:
+        ms: 1
+      buffer:
+        memory: 3355443
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    cloud:
-      stream:
-        kafka:
-          binder:
-            brokers: localhost:9092
-          streams:
-            binder:
-              configuration:
-                default:
-                  key:
-                    serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                  value:
-                    serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-            bindings:
-              requests-in:
-                consumer:
-                  application-id: custom-listener
-                  .: raw
-        bindings:
-          requests-in:
-            destination: events
-            header-mode: raw
-
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: wallet
+      auto-offset-reset: earliest
+      enable:
+        auto:
+          commit: false
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 mpp:
   elasticsearch:
     url: "http://localhost:9200"
