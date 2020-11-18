@@ -1,7 +1,6 @@
 package com.albertorsini.mpp.web.assembler;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import java.util.List;
 
@@ -21,10 +20,6 @@ public interface ResourceAssembler<E, R> {
 
   default Page<R> toResource(final Page<E> event) {
 
-    final List<R> eventResources = event.stream()
-      .map(this::toResource)
-      .collect(toList());
-
-    return new PageImpl<>(eventResources);
+    return event.map(this::toResource);
   }
 }

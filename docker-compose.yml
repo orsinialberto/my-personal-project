@@ -19,7 +19,6 @@ services:
       - 9000:3306
     volumes:
       - ./docker/data/mysql:/var/lib/mysql
-      - ./docker/conf/mysql:/etc/mysql/conf.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: root
